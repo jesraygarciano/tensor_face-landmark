@@ -15,25 +15,27 @@
  * =============================================================================
  */
 
-import '@tensorflow/tfjs-backend-webgl';
+import "@tensorflow/tfjs-backend-webgl";
 
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+import * as tfjsWasm from "@tensorflow/tfjs-backend-wasm";
 
 tfjsWasm.setWasmPaths(
-    `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${
-        tfjsWasm.version_wasm}/dist/`);
+  `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`
+);
 
-import '@tensorflow-models/face-detection';
+import "@tensorflow-models/face-detection";
 
-import {Camera} from './camera';
-import {setupDatGui} from './option_panel';
-import {STATE, createDetector} from './shared/params';
-import {setupStats} from './shared/stats_panel';
-import {setBackendAndEnvFlags} from './shared/util';
+import { Camera } from "./camera";
+import { setupDatGui } from "./option_panel";
+import { STATE, createDetector } from "./shared/params";
+import { setupStats } from "./shared/stats_panel";
+import { setBackendAndEnvFlags } from "./shared/util";
 
 let detector, camera, stats;
-let startInferenceTime, numInferences = 0;
-let inferenceTimeSum = 0, lastPanelUpdate = 0;
+let startInferenceTime,
+  numInferences = 0;
+let inferenceTimeSum = 0,
+  lastPanelUpdate = 0;
 let rafId;
 
 async function checkGuiUpdate() {
@@ -84,7 +86,9 @@ function endEstimateFaceStats() {
     inferenceTimeSum = 0;
     numInferences = 0;
     stats.customFpsPanel.update(
-        1000.0 / averageInferenceTime, 120 /* maxValue */);
+      1000.0 / averageInferenceTime,
+      120 /* maxValue */
+    );
     lastPanelUpdate = endInferenceTime;
   }
 }
@@ -109,8 +113,9 @@ async function renderResult() {
     // Detectors can throw errors, for example when using custom URLs that
     // contain a model that doesn't provide the expected output.
     try {
-      faces =
-          await detector.estimateFaces(camera.video, {flipHorizontal: false});
+      faces = await detector.estimateFaces(camera.video, {
+        flipHorizontal: false,
+      });
     } catch (error) {
       detector.dispose();
       detector = null;
@@ -127,8 +132,10 @@ async function renderResult() {
   // which shouldn't be rendered.
   if (faces && faces.length > 0 && !STATE.isModelChanged) {
     camera.drawResults(
-        faces, STATE.modelConfig.triangulateMesh,
-        STATE.modelConfig.boundingBox);
+      faces,
+      STATE.modelConfig.triangulateMesh,
+      STATE.modelConfig.boundingBox
+    );
   }
 }
 
@@ -140,7 +147,7 @@ async function renderPrediction() {
   }
 
   rafId = requestAnimationFrame(renderPrediction);
-};
+}
 
 async function app() {
   // Gui content will change depending on which model is in the query string.
@@ -157,6 +164,6 @@ async function app() {
   detector = await createDetector();
 
   renderPrediction();
-};
+}
 
 app();

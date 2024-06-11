@@ -107480,8 +107480,6 @@ async function renderPrediction() {
   rafId = requestAnimationFrame(renderPrediction);
 }
 
-;
-
 async function app() {
   // Gui content will change depending on which model is in the query string.
   const urlParams = new URLSearchParams(window.location.search);
@@ -107493,7 +107491,6 @@ async function app() {
   renderPrediction();
 }
 
-;
 app();
 },{"@tensorflow/tfjs-backend-webgl":"node_modules/@tensorflow/tfjs-backend-webgl/dist/index.js","@tensorflow/tfjs-backend-wasm":"node_modules/@tensorflow/tfjs-backend-wasm/dist/index.js","@tensorflow-models/face-detection":"node_modules/@tensorflow-models/face-detection/dist/face-detection.esm.js","./camera":"src/camera.js","./option_panel":"src/option_panel.js","./shared/params":"src/shared/params.js","./shared/stats_panel":"src/shared/stats_panel.js","./shared/util":"src/shared/util.js"}]},{},["src/index.js"], null)
 //# sourceMappingURL=/src.a2b27638.js.map
